@@ -1,5 +1,6 @@
 package com.example.administrator.testokhttp;
 
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -16,8 +17,13 @@ class GetNumbers {
     String run(String url) throws IOException {
         Request request = new Request.Builder().url(url).build();
 
-        try (Response response = client.newCall(request).execute()) {
+        Response response = client.newCall(request).execute();
+
+        if (response.isSuccessful()) {
             return response.body().string();
+//            byte[] b = response.body().bytes();
+//            return new String(b, "GBK");
         }
+        return null;
     }
 }
