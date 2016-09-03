@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
     public void updateKJH(View view) {
 
         MyAsynctask task = new MyAsynctask();
-        String strUrl = "http://chart.cp.360.cn/zst/ln11/?span=100";
+//        String strUrl = "http://chart.cp.360.cn/zst/ln11/?span=100";
 //        String strUrl = "http://www.52cp.cn/bull/index.php/Index/list_ln11";
 //        String strUrl = "http:////zs.cailele.com//ln11x5//baseTrend.php?t=100";
-//        String strUrl = "http://trend.caipiao.163.com/ln11xuan5/?periodNumber=100";
+        String strUrl = "http://trend.caipiao.163.com/ln11xuan5/?periodNumber=100";
 
         task.execute(strUrl);
     }
