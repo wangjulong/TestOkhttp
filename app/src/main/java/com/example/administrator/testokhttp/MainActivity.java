@@ -3,6 +3,7 @@ package com.example.administrator.testokhttp;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
             //s 网页内容
 //            String sep = "<td class='tdbg_1'>";
 //            String[] str = s.split(sep);
-
-            System.out.print(s);
+            textView = (TextView)findViewById(R.id.textView);
+            textView.setText(s);
+            textView.setMovementMethod(ScrollingMovementMethod.getInstance());
+//            System.out.print(s);
 
         }
     }
