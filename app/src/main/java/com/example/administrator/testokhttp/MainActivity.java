@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.orm.SugarRecord;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,24 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateKJH(View view) {
 
-//        String strUrl = "http://chart.cp.360.cn/zst/ln11/?span=100";
-//        String strUrl = "http://www.52cp.cn/bull/index.php/Index/list_ln11";
-//        String strUrl = "http:////zs.cailele.com//ln11x5//baseTrend.php?t=100";
-
-        for (int i=0;i<10;i++) {
-            Kjh kjh = new Kjh("abc"+i,i,i*2,i*3,i*4,i*5);
-            kjh.save();
-        }
-        textView = (TextView) findViewById(R.id.textView);
-        String s = Kjh.findById(Kjh.class,3).title + Kjh.findById(Kjh.class,3).n3;
-        textView.setText(s);
-
-//        MyAsynctask task = new MyAsynctask();
-//        String strUrl = "http://trend.caipiao.163.com/ln11xuan5/?periodNumber=100";
-//        task.execute(strUrl);
+        // 异步任务连接网络接受网页数据
+        MyAsynctask task = new MyAsynctask();
+        String strUrl = "http://trend.caipiao.163.com/ln11xuan5/?periodNumber=100";
+        task.execute(strUrl);
     }
 
 
+    /**
+     * 内部类，异步任务处理
+     */
     public class MyAsynctask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -59,11 +54,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
 
-            //s 网页内容
-//            String sep = "<td class='tdbg_1'>";
-//            String[] str = s.split(sep);
+            // 筛选数据并更新数据库文件
+            DataInit.dataSave(s);
+
+            // 显示数据 数据库-->textView
             textView = (TextView) findViewById(R.id.textView);
-            textView.setText(s);
+            List<Kjh> one = Kjh.listAll(Kjh.class);
+            String t = "";
+
+            for (Kjh temp : one) {
+                t = t + temp.title + " " + temp.n1 + " " + temp.n2 + " " + temp.n3 + " " + temp.n4 + " " + temp.n5 + "\n";
+            }
+
+            textView.setText(t);
             textView.setMovementMethod(ScrollingMovementMethod.getInstance());
 //            System.out.print(s);
 
